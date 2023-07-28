@@ -33,7 +33,7 @@ services:
         volumes:
             - ./docker/mysql:/var/lib/mysql
         environment:
-            MYSQL_DATABASE: laravel_instagram_clone
+            MYSQL_DATABASE: laravuedium_api
             MYSQL_USER: user
             MYSQL_PASSWORD: password
             MYSQL_ROOT_PASSWORD: password
