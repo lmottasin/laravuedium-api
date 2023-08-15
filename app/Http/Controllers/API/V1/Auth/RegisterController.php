@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\API\V1\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\API\Auth\StoreUserRequest;
+use App\Http\Requests\API\V1\Auth\StoreUserRequest;
 use App\Jobs\SendEmailVerification;
 use App\Models\User;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Response;
 
 class RegisterController extends Controller
