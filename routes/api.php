@@ -18,16 +18,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['middleware' => 'auth:sanctum'], function (){
+Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
     Route::post('auth/logout', LogoutController::class);
     Route::apiSingleton('profile', ProfileController::class);
 
-    Route::get('user', function (Request $request){
+    Route::get('user', function (Request $request) {
         return $request->user();
     });
 });
 
-Route::group(['prefix' => 'auth'], function (){
+Route::group(['prefix' => 'auth'], function () {
     Route::post('register', RegisterController::class);
     Route::post('login', LoginController::class);
 });
