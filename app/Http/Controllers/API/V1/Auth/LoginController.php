@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Api\V1\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\V1\Auth\LoginUserRequest;
+use App\Http\Resources\V1\UserResources;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
@@ -30,6 +30,7 @@ class LoginController extends Controller
 
         return response()->json([
             'access_token' => $user->createToken($device, expiresAt: $expiresAt)->plainTextToken,
+            'user' => UserResources::make($user)
         ], Response::HTTP_CREATED);
     }
 }
