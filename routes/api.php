@@ -19,9 +19,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
-
-    Route::apiSingleton('profile', ProfileController::class);
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::group(['middleware' => 'verified'], function (){
+        Route::apiSingleton('profile', ProfileController::class);
+    });
 
     Route::group(['prefix' => 'auth', 'as' => 'auth'], function () {
         Route::post('logout', LogoutController::class);
