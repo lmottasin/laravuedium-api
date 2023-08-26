@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\V1\Auth\LoginController;
 use App\Http\Controllers\API\V1\Auth\LogoutController;
+use App\Http\Controllers\API\V1\Auth\PasswordUpdateController;
 use App\Http\Controllers\API\V1\Auth\ProfileController;
 use App\Http\Controllers\API\V1\Auth\RegisterController;
 use App\Http\Controllers\API\V1\Auth\UserController;
@@ -20,8 +21,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
-    Route::group(['middleware' => 'verified'], function (){
+    Route::group(['middleware' => 'verified'], function () {
         Route::apiSingleton('profile', ProfileController::class);
+        Route::put('password', PasswordUpdateController::class)->name('password.update');
     });
 
     Route::group(['prefix' => 'auth', 'as' => 'auth'], function () {
