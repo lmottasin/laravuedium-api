@@ -5,8 +5,8 @@ use App\Http\Controllers\API\V1\Auth\LogoutController;
 use App\Http\Controllers\API\V1\Auth\PasswordUpdateController;
 use App\Http\Controllers\API\V1\Auth\ProfileController;
 use App\Http\Controllers\API\V1\Auth\RegisterController;
+use App\Http\Controllers\API\V1\Auth\ResendEmailVerificationController;
 use App\Http\Controllers\API\V1\Auth\UserController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,9 +26,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::put('password', PasswordUpdateController::class)->name('password.update');
     });
 
-    Route::group(['prefix' => 'auth', 'as' => 'auth'], function () {
-        Route::post('logout', LogoutController::class);
-        Route::get('user', UserController::class)->name('auth.user');
+    Route::group(['prefix' => 'auth', 'as' => 'auth.'], function () {
+        Route::post('logout', LogoutController::class)->name('logout');
+        Route::get('user', UserController::class)->name('user');
+        Route::post('email/resend-verification-notification', ResendEmailVerificationController::class)
+            ->name('verification.send');
     });
 
 });
