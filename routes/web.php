@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\V1\Auth\SocialLoginController;
 use App\Http\Controllers\API\V1\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,3 +22,10 @@ Route::get('/', function () {
 Route::get('/verify-email/{id}/{hash}', VerifyEmailController::class)
     ->middleware(['signed', 'throttle:6,1'])
     ->name('verification.verify');
+
+Route::group(['middleware' => 'guest'], function () {
+    Route::get('login/{provider}/callback', [SocialLoginController::class, 'handleProviderCallback'])
+        ->name('social.callback');
+});
+
+
