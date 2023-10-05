@@ -27,9 +27,23 @@ class SocialLoginController extends Controller
                 ->throw()
                 ->json();
 
-            // $socialUser = Socialite::driver($provider)->stateless()->userFromToken($data['access_token']);
+            $socialUser = Socialite::driver($provider)->stateless()->userFromToken($data['access_token']);
 
-            $socialUser = $this->getUserByToken($data['token']);
+            /*$publicEmailsUrl = 'https://api.github.com/user/public_emails';
+
+            try {
+                $response = Http::acceptJson()->withToken($data['access_token'])->get(
+                    $publicEmailsUrl
+                )->json();
+
+                foreach ($response as $email) {
+                    if ($email['primary'] && $email['verified']) {
+                        return $email['email'];
+                    }
+                }
+            } catch (Exception $e) {
+                return $e->getMessage();
+            }*/
 
             return response()->json($socialUser);
 
@@ -58,26 +72,6 @@ class SocialLoginController extends Controller
                 'email_verified_at' => now()
             ]
         );
-
-        return $user;
-    }
-
-    /**
-     * @throws RequestException
-     */
-    protected function getUserByToken($token)
-    {
-        $userUrl = 'https://api.github.com/user';
-
-        $user = Http::get($userUrl, [
-            'Authorization' => 'token '.$token,
-        ])->throw()->json();
-
-        return $user;
-
-        if (in_array('user:email', $this->scopes, true)) {
-            $user['email'] = $this->getEmailByToken($token);
-        }
 
         return $user;
     }
